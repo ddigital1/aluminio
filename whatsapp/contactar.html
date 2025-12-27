@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malumak WhatsApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+    <!--<link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+
+    <form id="formulario" class="formulario">
+            <h2>MALUMAK Constructores</h2>
+            <p align="center">CONSTRUCTORA INDUSTRIAL & COMERCIAL</p>
+        <div class="box-input">
+            <input name="nombre" id="nombre" type="text" required>
+            <span data-placeholder="Escribe Tu Nombre Aqui"></span>
+        </div>
+        <div class="box-input">
+            <input name="apellidos" id="apellidos" type="text" required>
+            <span data-placeholder="Escribe Tus Apellidos"></span>
+        </div>
+        <div class="box-input">
+            <input name="email" id="email" type="email" required>
+            <span data-placeholder="Escribe Tu Correo Electrónico"></span>
+        </div>
+        <div class="box-input">
+            <input name="empresa" id="empresa" type="empresa" >
+            <span data-placeholder="Empresa"></span>
+        </div>
+        <button id="submit" type="submit" class="boton" onClick="window.history.back()"><i class="fab fa-whatsapp"></i> Enviar WhatsApp</button>
+        <div>
+        <a href="https://ddigital1.github.io/asesoria" class="btn btn-xl" ></a>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(".box-input input").on("focus", function(){
+            $(this).addClass("focus");
+        });
+
+        $(".box-input input").on("blur", function(){
+            if($(this).val() == ""){
+                $(this).removeClass("focus");
+            }
+        });
+
+    </script>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- <script src="whatsapp.js"></script> -->
+    
+    <style>
+    *{
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+	font-family: "Montserrat", sans-serif;
+}
+
+body{
+	min-height: 100vh;
+	background-image: linear-gradient(120deg, #00ccff, #6600ff);
+	/*background: #f1f1f1;*/
+}
+
+.formulario{
+	width: 360px;
+	background: #f1f1f1;
+	height: 400px;
+	padding: 80px 40px;
+	border-radius: 10px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.2);
+}
+
+.formulario h1{
+	text-align: center;
+	margin-bottom: 60px;
+	color: #333;
+	font-weight: 600;
+}
+
+.box-input{
+	border-bottom: 2px solid #adadad;
+	position: relative;
+	margin: 30px 0;
+}
+
+.box-input input{
+	font-size: 16px;
+	color: #333;
+	border: none;
+	width: 100%;
+	outline: none;
+	background: none;
+	padding: 0 5px;
+	height: 40px;
+}
+
+.box-input span::before{
+	content: attr(data-placeholder);
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	color: #adadad;
+	transform: translateY(-50%);
+	z-index: -1;
+	transition: .5s;
+}
+
+.box-input span::after{
+	content: '';
+	position: absolute;
+	width: 0%;
+	height: 2px;
+	background: linear-gradient(120deg, #3498db, #8e44ad);
+	transition: .5s;
+}
+
+.focus + span::before{
+	top: -5px;
+}
+
+.focus + span::after{
+	width: 100%;
+}
+
+.boton{
+	display: block;
+	width: 100%;
+	height: 50px;
+	background-color: #48bb78;
+	border: solid 2px #48bb78;
+	color: #fff;
+	border-radius: 5px;
+	font-weight: 600;
+	font-size: 18px;
+	box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.boton:hover{
+	background-color: #2F855A;
+	border: solid 2px #2F855A;
+	transition: .5s;
+}
+
+    </style>
+    <script>
+    // JavaScript Document
+function isMobile() {
+    if (sessionStorage.desktop)
+        return false;
+    else if (localStorage.mobile)
+        return true;
+    var mobile = ['iphone', 'ipad', 'android', 'blackberry', 'nokia', 'opera mini', 'windows mobile', 'windows phone', 'iemobile'];
+    for (var i in mobile)
+        if (navigator.userAgent.toLowerCase().indexOf(mobile[i].toLowerCase()) > 0) return true;
+    return false;
+}
+
+const formulario = document.querySelector('#formulario');
+const buttonSubmit = document.querySelector('#submit');
+const urlDesktop = 'https://api.whatsapp.com/';
+const urlMobile = 'whatsapp://';
+const telefono = '4445760050';
+
+formulario.addEventListener('submit', (event) => {
+    event.preventDefault()
+    buttonSubmit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>'
+    buttonSubmit.disabled = true
+    setTimeout(() => {
+        let nombre = document.querySelector('#nombre').value
+        let apellidos = document.querySelector('#apellidos').value
+        let email = document.querySelector('#email').value
+		let empresa = document.querySelector('#empresa').value
+        let mensaje = 'send?phone=' + telefono + '&text=Hola MALUMAK Solicito Inf.%0AMi Nombre es:%0A' + nombre + '%0AApellidos:%0A' + apellidos + '%0AEMail:%0A' + email + '%0AEmpresa:%0A' + empresa + ''
+        if(isMobile()) {
+            window.open(urlMobile + mensaje, '_blank')
+        }else{
+            window.open(urlDesktop + mensaje, '_blank')
+        }
+        buttonSubmit.innerHTML = '<i class="fas fa-whatsapp"></i> Enviar WhatsApp'
+        buttonSubmit.disabled = false
+    }, 3000);
+});
+    </script>
+</body>
+
+</html>
